@@ -73,17 +73,27 @@ class Modelone(object):
 			self.save_parameter(iteration)
 
 	def evaluate(self):
-		output = open("dev.out","a")
+		output = open("dev.out","w")
 		for number_of_sentence in range(len(self.paired_sentences)):
 			e = self.paired_sentences[number_of_sentence][0].split()
 			f = self.paired_sentences[number_of_sentence][1].split()
-			for j in range(1,len(e)):
+			# for j in range(1,len(e)):
+			# 	candidates = []
+			# 	for i in range(len(f)):
+			# 		candidates.append((self.translation[(f[i],e[j])],i))
+
+			# 	i = max(candidates,key=lambda item:item[0])[1]
+			# 	result = "{} {} {}\n".format(number_of_sentence+1,j,i+1)
+			# 	output.write(result)
+			for i in range(0,len(f)):
 				candidates = []
-				for i in range(len(f)):
-					candidates.append((self.translation[(f[i],e[j])],i))
-				i = max(candidates,key=lambda item:item[0])[1]
+				for j in range(1,len(e)):
+					candidates.append((self.translation[(f[i],e[j])],j))
+
+				j = max(candidates,key=lambda item:item[0])[1]
 				result = "{} {} {}\n".format(number_of_sentence+1,j,i+1)
 				output.write(result)
+
 		output.close()
 
 	# f and e are type of list of words
